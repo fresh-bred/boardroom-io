@@ -25,8 +25,6 @@ class MyRect extends React.Component {
   componentDidUpdate() {
     let points = [];
     const stage = this.refs.stage.getStage();
-    let newLayer = Konva.Node.create(this.state.addLayer);
-    stage.add(newLayer);
     stage.draw();
     const image = this.refs.image;
     const layer = this.refs.layer;
@@ -62,7 +60,7 @@ class MyRect extends React.Component {
       };
       context.moveTo(localPos.x, localPos.y);
       points.push(localPos.x, localPos.y);
-      this.setState({ points: points });
+      // this.setState({ points: points });
       let pos = stage.getPointerPosition();
       localPos = {
         x: pos.x - image.x(),
@@ -90,7 +88,11 @@ class MyRect extends React.Component {
           <Layer ref="layer">
             <Image
               ref="image"
-              
+              image={this.state.canvas}
+              x={0}
+              y={0}
+              stroke="green"
+              shadowBlur={5}
             />
             <Line
               ref="line"
