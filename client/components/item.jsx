@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
 import { Layer, Rect, Stage, Group, Image, Line, Path } from 'react-konva';
+import Konva from 'konva';
 
 class Item extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.data);
-    this.elem = this.makeElem();
+    this.state = { elem: this.makeElem() };
 
   }
   makeElem() {
     let elem;
-    let item = this.props.data
-    switch (item.type) {
+    let item = this.props.data.attrs
+    let type = this.props.data.type
+    switch (type) {
       case "Rect":
         elem = <Rect
           x={item.x}
@@ -31,24 +32,33 @@ class Item extends Component {
           scale={item.scale}
           draggable={item.draggable}
           />
-        
         break;
-      case item.type:
+      case "Image":
+        elem = <Image
+          x={item.x}
+          y={item.y}
+          image={item.image}
+          width={item.width}
+          height={item.height}
+          draggable={item.draggable}
+          />
         break;
-      case item.type:
-        break;
-      case item.type:
-        break;
-      case item.type:
+      case "Line":
+        elem = <Line points={item.points}
+          stroke={item.stroke}
+          strokeWidth={item.strokeWidth}
+          lineCap={item.lineCap}
+          lineJoin={item.lineJoin}
+          draggable={item.draggable}
+          />
         break;
     }
-    console.log(elem);
     return elem;
   }
   render() {
-    
+
     return (
-      this.elem
+      this.state.elem
     );
   }
 }

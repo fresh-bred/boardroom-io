@@ -22,8 +22,7 @@ class App extends React.Component {
       <div>
         <div className="drawMe">
           <KonovaStage />
-          <button >Write/Erase</button>
-  <button >Save board</button>
+          
         </div>
       </div>
     );
