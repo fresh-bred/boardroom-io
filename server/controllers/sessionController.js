@@ -15,8 +15,4 @@ sessionController.createSession = (req, res, next) => {
   });
 };
 
-sessionController.checkSession = () => {
-
-};
-
 module.exports = sessionController;
