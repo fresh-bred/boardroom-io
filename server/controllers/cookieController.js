@@ -8,9 +8,10 @@ cookieController.setCookie = (req, res, next) => {
 
 cookieController.checkCookie = (req, res, next) => {
   Session.findOne({ _id: req.cookies.session }, (err, data) => {
-    if (data === null) res.redirect('/signup');
-    if (data !== null) {
-      next();
+    if (data === null) {
+      res.redirect('/signup');
+    } else {
+      res.redirect('/boardroom');
     }
   });
 };

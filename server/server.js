@@ -12,6 +12,7 @@ const userController = require('./controllers/userController');
 const cookieController = require('./controllers/cookieController');
 const sessionController = require('./controllers/sessionController');
 const fileController = require('./controllers/fileController');
+const authController = require('./controllers/authController');
 const mongoURI = require('./mongourl');
 
 const privateKey = fs.readFileSync(path.join(__dirname, '/sslcert/file.pem'), 'utf-8');
@@ -56,9 +57,11 @@ app.get('/', cookieController.checkCookie, (req, res) => {
 app.post('/login', userController.verifyUser, cookieController.setCookie,
   sessionController.createSession, (req, res) => res.redirect('/boardroom'));
 
+app.post('/loginAuth', authController.start);
+app.get('/githubAccess', authController.getToken);
+app.get('/githubDone', sessionController.createSession, (req, res) => res.redirect('/boardroom'));
 app.post('/signup', userController.createUser, cookieController.setCookie,
   sessionController.createSession, (req, res) => res.redirect('/boardroom'));
 
 app.post('/element', fileController.createFile);
 server.listen(3000, () => console.log('listening on *:3000'));
-
