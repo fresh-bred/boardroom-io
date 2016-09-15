@@ -51,11 +51,13 @@ class KonvaStage extends React.Component {
 
   saveStage(data) {
     console.log(data);
+    console.log('about to set state')
+    console.log(this.state.items);
     this.setState({ items: data });
-    // $.post('/element', data);
+    
   }
   sendData() {
-    data = {fileName: 'someName', fileJSON: JSON.stringify(this.state.items)}
+    let data = {fileName: 'someName', fileJSON: JSON.stringify(this.state.items)}
     $.post('/element', data);
   }
   clear() {

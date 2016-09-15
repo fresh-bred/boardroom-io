@@ -1,5 +1,6 @@
 const File = require('./../models/fileModel');
 const MongoClient = require('mongodb').MongoClient;
+const User = require('./../models/userModel');
 
 const fileController = {};
 

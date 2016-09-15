@@ -14,9 +14,8 @@ class KonvaLayer extends Component {
         arr.push({ type: item.className, attrs: item.attrs })
       that.props.saveStage(arr);  
     })
-    },500)
+    },1000)
     let arr = []
-    
     
   }
 
