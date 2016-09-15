@@ -182,7 +182,7 @@ $(document).ready(() => {
     clearCanvas();
   });
 
-  $('#localVideo').hide();
+  // $('#localVideo').hide();
   // $('#remoteVideos').change((e) => {
   //   alert('this is changing');
   //   let numberOfVideos = $('#remoteVideos video').length;
