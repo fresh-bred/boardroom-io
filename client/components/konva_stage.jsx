@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Layer, Rect, Stage, Group, Image, Line, Path } from 'react-konva';
-import KonvaLayer from './layer.jsx';
-/
+import KonvaLayer from './konova_layer.jsx';
 
 class KonvaStage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      layers: [],
       color: 'red',
       items: [{
         type: "Rect",
@@ -33,7 +33,6 @@ class KonvaStage extends React.Component {
     };
     // this.save = this.save.bind(this);
   }
-  s
 
   save() {
     const layer = this.refs.stage;
@@ -44,54 +43,13 @@ class KonvaStage extends React.Component {
     // $.post('/element', saved);
   }
   render() {
-    let arr = [], item, elem;
-    for (let i = 0, len = this.state.items.length; i < len; i++) {
-      item = this.state.items[i];
-      console.log(item.type);
-      switch (item.type) {
-        case "Rect":
-          elem = <Rect
-            x={item.x}
-            y={item.y}
-            width={item.width}
-            height={item.height}
-            fill={item.fill}
-            key={i} draggable={item.draggable}
-            />
-          break;
-        case "Path":
-          elem = <Path
-            x={item.x}
-            y={item.y}
-            data={item.data}
-            fill={item.fill}
-            scale={item.scale}
-            draggable={item.draggable}
-            />
-          
-          break;
-        case item.type:
-          break;
-        case item.type:
-          break;
-        case item.type:
-          break;
-        case item.type:
-          break;
-      }
-      arr.push(elem);
-      console.log(arr);
-    }
+
   return(
-      <div>
-  <Stage ref="stage" width={600} height={600}>
-    <Layer ref="layer">
-      {arr}
-    </Layer>
-  </Stage>
-  <button onClick={this.props.updateMode}>Write/Erase</button>
-  <button onClick={this.save}>Save board</button>
-</div>
+    <div>
+      <Stage ref="stage" width={600} height={600}>
+        <KonvaLayer ref="layer" items={this.state.items}/>
+      </Stage>
+    </div>
     );
   }
 }
