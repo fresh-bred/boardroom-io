@@ -3,7 +3,7 @@ const request = require('request');
 const authController = {};
 
 authController.start = (req, res, next) => {
-  req.redirect('https://github.com/login/oauth/authorize?client_id=141146750fd62875fcea&&redirect_uri=https://localhost:3000/githubAccess');
+  res.redirect('https://github.com/login/oauth/authorize?client_id=141146750fd62875fcea&&redirect_uri=https://localhost:3000/githubAccess');
 };
 
 authController.getToken = (req, res, next) => {

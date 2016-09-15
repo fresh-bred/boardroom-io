@@ -7,7 +7,6 @@ const webrtc = new SimpleWebRTC({
   remoteVideosEl: 'remoteVideos',
   // immediately ask for camera access
   autoRequestMedia: true,
-  url: 'https://localhost:3000/boardroom',
 });
 
 // we have to wait until it's ready

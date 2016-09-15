@@ -57,7 +57,7 @@ app.get('/', cookieController.checkCookie, (req, res) => {
 app.post('/login', userController.verifyUser, cookieController.setCookie,
   sessionController.createSession, (req, res) => res.redirect('/boardroom'));
 
-app.post('/loginAuth', authController.start);
+app.get('/loginAuth', authController.start);
 app.get('/githubAccess', authController.getToken);
 app.get('/githubDone', sessionController.createSession, (req, res) => res.redirect('/boardroom'));
 app.post('/signup', userController.createUser, cookieController.setCookie,

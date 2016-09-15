@@ -7,13 +7,17 @@ cookieController.setCookie = (req, res, next) => {
 };
 
 cookieController.checkCookie = (req, res, next) => {
-  Session.findOne({ _id: req.cookies.session }, (err, data) => {
-    if (data === null) {
-      res.redirect('/signup');
-    } else {
-      res.redirect('/boardroom');
-    }
-  });
+  if (!req.cookies.session) {
+    res.redirect('/signup');
+  } else {
+    Session.findOne({ _id: req.cookies.session }, (err, data) => {
+      if (data._id.toString() !== req.cookies.session) {
+        res.redirect('/signup');
+      } else {
+        res.redirect('/boardroom');
+      }
+    });
+  }
 };
 
 module.exports = cookieController;
