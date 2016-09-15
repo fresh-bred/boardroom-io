@@ -5,7 +5,10 @@ import Konva from 'konva';
 class Item extends Component {
   constructor(props) {
     super(props);
+    this.elem = this.makeElem()
     this.state = { elem: this.makeElem() };
+  }
+  componentDidUpdate() {
 
   }
   makeElem() {
@@ -58,7 +61,7 @@ class Item extends Component {
   render() {
 
     return (
-      this.state.elem
+      this.makeElem()
     );
   }
 }

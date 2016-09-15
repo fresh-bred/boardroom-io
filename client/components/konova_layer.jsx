@@ -7,16 +7,16 @@ class KonvaLayer extends Component {
   }
   componentDidMount() {
   }
-  setParentState() {
+  setParentState(e) {
+    console.log(this.refs.layer.toJSON())
     let that = this;
-    setTimeout(() => {
-      that.refs.layer.children.forEach(item => {
-        arr.push({ type: item.className, attrs: item.attrs })
-      that.props.saveStage(arr);  
-    })
-    },1000)
-    let arr = []
-    
+
+      let arr = []
+      let data = JSON.parse(this.refs.layer.toJSON())
+      data.children.forEach(thing => {
+        arr.push({ type: thing.className, attrs: thing.attrs })
+       })
+      this.props.saveStage(arr); 
   }
 
   render() {

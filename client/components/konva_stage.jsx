@@ -50,9 +50,6 @@ class KonvaStage extends React.Component {
   }
 
   saveStage(data) {
-    console.log(data);
-    console.log('about to set state')
-    console.log(this.state.items);
     this.setState({ items: data });
     
   }
