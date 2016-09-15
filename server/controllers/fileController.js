@@ -10,7 +10,7 @@ fileController.createFile = (req, res) => {
   // find object with correct username in database, create a file schema & push into files array
 
   User.findByIdAndUpdate(req.cookies.id, { $push: { files: file._id } }, (err) => console.log(err));
-  file.creatFile((err) => {
+  file.save((err) => {
     if (err) {
       res.status(503);
       res.send('file creation failed');
