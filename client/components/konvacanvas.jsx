@@ -1,112 +1,102 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Layer, Rect, Stage, Group, Image, Line } from 'react-konva';
-import CanvasComponent from './canvas.jsx';
+import { Layer, Rect, Stage, Group, Image, Line, Path } from 'react-konva';
+import KonvaLayer from './layer.jsx';
+/
 
-class MyRect extends React.Component {
+class KonvaStage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      color: 'green',
-      canvas: document.createElement('canvas'),
-      points: [],
+      color: 'red',
+      items: [{
+        type: "Rect",
+        x: 10,
+        y: 10,
+        width: 400,
+        height: 50,
+        fill: "red",
+        draggable: true
+      }, {
+        type: 'Path', 
+        x: 50,
+        y: 40,
+        data: 'M12.582,9.551C3.251,16.237,0.921,29.021,7.08,38.564l-2.36,1.689l4.893,2.262l4.893,2.262l-0.568-5.36l-0.567-5.359l-2.365,1.694c-4.657-7.375-2.83-17.185,4.352-22.33c7.451-5.338,17.817-3.625,23.156,3.824c5.337,7.449,3.625,17.813-3.821,23.152l2.857,3.988c9.617-6.893,11.827-20.277,4.935-29.896C35.591,4.87,22.204,2.658,12.582,9.551z',
+        fill: 'green',
+        scale: {
+          x : 2,
+          y : 2
+        },
+        draggable: true
+      }
+      ]
     };
-    this.save = this.save.bind(this);
+    // this.save = this.save.bind(this);
   }
-  componentWillMount() {
-    this.state.canvas.width = 600;
-    this.state.canvas.height = 600;
-  }
-  componentDidMount() {
-    const stage = this.refs.stage.getStage();
-    // let newLayer = this.state.addLayer;
-    // stage.add(newLayer);
-  }
-  componentDidUpdate() {
-    let points = [];
-    const stage = this.refs.stage.getStage();
-    let newLayer = Konva.Node.create(this.state.addLayer);
-    stage.add(newLayer);
-    stage.draw();
-    const image = this.refs.image;
-    const layer = this.refs.layer;
-    const context = this.state.canvas.getContext('2d');
-    context.strokeStyle = "blue";
-    context.lineJoin = "round";
-    context.lineWidth = 5;
-    let isPaint = false;
-    let lastPointerPosition;
-    let mode = this.props.mode;
-    stage.on('contentMousedown.proto', function() {
-      isPaint = true;
-      lastPointerPosition = stage.getPointerPosition();
-    });
+  s
 
-    stage.on('contentMouseup.proto', function() {
-      isPaint = false;
-    });
-    stage.on('contentMousemove.proto', function () {
-      if (!isPaint) {
-        return;
-      }
-      if (mode === 'brush') {
-        context.globalCompositeOperation = 'source-over';
-      }
-      if (mode === 'eraser') {
-        context.globalCompositeOperation = 'destination-out';
-      }
-      context.beginPath();
-      let localPos = {
-        x: lastPointerPosition.x - image.x(),
-        y: lastPointerPosition.y - image.y(),
-      };
-      context.moveTo(localPos.x, localPos.y);
-      points.push(localPos.x, localPos.y);
-      this.setState({ points: points });
-      let pos = stage.getPointerPosition();
-      localPos = {
-        x: pos.x - image.x(),
-        y: pos.y - image.y(),
-      };
-      context.lineTo(localPos.x, localPos.y);
-      context.closePath();
-      context.stroke();
-      lastPointerPosition = pos;
-      layer.draw();
-      console.log(points);
-    });
-  }
   save() {
-    const layer = this.refs.layer;
-    let saved = layer.toJSON();
-    console.log(saved);
-    this.setState({ color: 'blue' });
+    const layer = this.refs.stage;
+    console.log(layer);
+    // let saved = layer.toJSON();
+    // console.log(saved);
+    // this.setState({ color: 'blue' });
     // $.post('/element', saved);
   }
   render() {
-    return (
+    let arr = [], item, elem;
+    for (let i = 0, len = this.state.items.length; i < len; i++) {
+      item = this.state.items[i];
+      console.log(item.type);
+      switch (item.type) {
+        case "Rect":
+          elem = <Rect
+            x={item.x}
+            y={item.y}
+            width={item.width}
+            height={item.height}
+            fill={item.fill}
+            key={i} draggable={item.draggable}
+            />
+          break;
+        case "Path":
+          elem = <Path
+            x={item.x}
+            y={item.y}
+            data={item.data}
+            fill={item.fill}
+            scale={item.scale}
+            draggable={item.draggable}
+            />
+          
+          break;
+        case item.type:
+          break;
+        case item.type:
+          break;
+        case item.type:
+          break;
+        case item.type:
+          break;
+      }
+      arr.push(elem);
+      console.log(arr);
+    }
+  return(
       <div>
-        <Stage ref="stage" width={600} height={600}>
-          <Layer ref="layer">
-            <Image
-              ref="image"
-              
-            />
-            <Line
-              ref="line"
-              points={this.state.points}
-              stroke="blue"
-            />
-          </Layer>
-        </Stage>
-        <button onClick={this.props.updateMode}>Write/Erase</button>
-        <button onClick={this.save}>Save board</button>
-      </div>
+  <Stage ref="stage" width={600} height={600}>
+    <Layer ref="layer">
+      {arr}
+    </Layer>
+  </Stage>
+  <button onClick={this.props.updateMode}>Write/Erase</button>
+  <button onClick={this.save}>Save board</button>
+</div>
     );
   }
 }
 
-module.exports = MyRect;
+module.exports = KonvaStage;
 
             // <Image
             //   ref="image"

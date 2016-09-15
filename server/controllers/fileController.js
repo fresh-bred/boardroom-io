@@ -15,7 +15,7 @@ fileController.createFile = (req, res) => {
       res.send('file creation failed')
     } else {
       console.log('File created!');
-      io.broadcast('element', file);
+
       res.status(200).send('ok');
     }
   });

@@ -18,15 +18,9 @@ class App extends React.Component {
     this.updateMode = this.updateMode.bind(this);
   }
   compnentDidMount() {
-    this.setState({ mode: 'brush' });
   }
   updateMode() {
-    if (this.state.mode === 'brush') {
-      this.setState({ mode: 'eraser' });
-    }
-    if (this.state.mode === 'eraser') {
-      this.setState({ mode: 'brush' });
-    }
+
   }
 
   render() {
