@@ -60,8 +60,10 @@ app.post('/login', userController.verifyUser, cookieController.setCookie,
 app.get('/loginAuth', authController.start);
 app.get('/githubAccess', authController.getToken);
 app.get('/githubDone', sessionController.createSession, (req, res) => res.redirect('/boardroom'));
+
 app.post('/signup', userController.createUser, cookieController.setCookie,
   sessionController.createSession, (req, res) => res.redirect('/boardroom'));
 
 app.post('/element', fileController.createFile);
+app.get('/getelement', fileController.getUserFiles, fileController.parseFiles, (req, res) => { console.log(res.files); res.send(); });
 server.listen(3000, () => console.log('listening on *:3000'));

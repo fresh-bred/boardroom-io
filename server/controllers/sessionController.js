@@ -3,7 +3,7 @@ const Session = require('./../models/sessionModel');
 const sessionController = {};
 
 sessionController.createSession = (req, res, next) => {
-  const session = new Session({ expireAt: Date.now() });
+  const session = new Session({ id: res.locals.id, expireAt: Date.now() });
   session.save((err) => {
     if (err) {
       throw err;
