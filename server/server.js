@@ -49,6 +49,9 @@ io.on('connect_error', (data) => {
   console.log('error');
   console.log('error in io on error ', data);
 })
+// io.on('move', (data) => {
+//   socket.emit('move', data);
+// })
 
 app.use('/element', express.static('../client/public/element'));
 app.use(express.static(path.join(__dirname, '../client/public')));

@@ -3,6 +3,19 @@ import ReactDOM from 'react-dom';
 import { Layer, Rect, Stage, Group, Image, Line, Path } from 'react-konva';
 import KonvaLayer from './konova_layer.jsx';
 import Konva from 'konva';
+import io from 'socket.io-client';
+import PeerToPeer from  'socket.io-p2p';
+// Establish the socket connection to the server that served the page, and
+// export it to make it available to other JS files on the client side.
+const socket = io.connect("https://localhost:3000", { secure: true });
+
+// Establish a peer to peer socket, which will be
+// managed by the server.
+const p2p = new PeerToPeer(socket);
+p2p.on('ready', () => {
+  p2p.usePeerConnection = true;
+});
+
 
 class KonvaStage extends React.Component {
   constructor(props) {
@@ -42,19 +55,32 @@ class KonvaStage extends React.Component {
             lineCap: 'round',
             lineJoin: 'round',
             draggable: true
-          } 
+          }
         }
       ]
     };
     this.saveStage = this.saveStage.bind(this);
+        let that = this;
+
+
+  }
+  componentDidMount() {
+    let that = this
+    p2p.on('data', (data) => {
+      console.log('move event', data);
+      that.setState({ items: data });
+    });
+
   }
 
   saveStage(data) {
+    console.log
+    p2p.emit('data', data);
     this.setState({ items: data });
-    
+    console.log('move emitted');
   }
   sendData() {
-    let data = {fileName: 'someName', fileJSON: JSON.stringify(this.state.items)}
+    let data = { fileName: 'someName', fileJSON: JSON.stringify(this.state.items) }
     $.post('/element', data);
   }
   clear() {
@@ -68,8 +94,7 @@ class KonvaStage extends React.Component {
           <KonvaLayer ref="layer" items={this.state.items} saveStage={this.saveStage}/>
         </Stage>
         <button onClick={this.sendData.bind(this) }>Save</button>
-        <button onClick={this.clear.bind(this)}>Clear</button>
- 
+        <button onClick={this.clear.bind(this) }>Clear</button>
       </div>
     );
   }
